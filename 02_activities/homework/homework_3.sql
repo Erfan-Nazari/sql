@@ -15,7 +15,7 @@ SELECT c.*
 FROM customer AS c
 INNER JOIN customer_purchases AS cp
     ON c.customer_id = cp.customer_id
-GROUP BY cp.customer_id
+GROUP BY c.customer_id
 HAVING SUM(quantity * cost_to_customer_per_qty) > 2000
 ORDER BY customer_last_name, customer_first_name;
 
@@ -31,11 +31,13 @@ When inserting the new vendor, you need to appropriately align the columns to be
 -> To insert the new row use VALUES, specifying the value you want for each column:
 VALUES(col1,col2,col3,col4,col5) 
 */
-CREATE TEMPORARY TABLE new_vendor AS 
+DROP TABLE IF EXISTS new_vendor;
+
+CREATE TEMP TABLE IF NOT EXISTS new_vendor AS
 SELECT *
 FROM vendor;
 
-INSERT INTO temp.new_vendor(vendor_id, vendor_name, vendor_type, vendor_owner_first_name, vendor_owner_last_name)
+INSERT INTO temp.new_vendor
 VALUES(10, 'Thomas''s Superfood Store', 'Fresh Focused', 'Thomas', 'Rosenthal');
 
 
